@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="jp">
 
 <head>
     <meta charset="UTF-8">

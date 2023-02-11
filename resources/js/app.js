@@ -4,7 +4,7 @@ import { createApp } from 'vue'
 import { createVuetify } from 'vuetify'
 import App from './App.vue'
 // Route設定は次に行います
-import router from "./router"
+import router from "./router.js"
 
 const app = createApp(App)
 const vuetify = createVuetify()
