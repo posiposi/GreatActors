@@ -1,11 +1,11 @@
-import TopPage from './components/TopPage.vue';
+import MovieList from './components/MovieList.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
 	{
 		path: '/',
-		name: 'TopPage',
-		component: TopPage,
+		name: 'MovieList',
+		component: MovieList,
 	},
 ];
 const router = createRouter({
