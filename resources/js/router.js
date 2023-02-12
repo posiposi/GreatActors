@@ -1,4 +1,4 @@
-import TopPage from './pages/TopPage.vue';
+import TopPage from './components/TopPage.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
