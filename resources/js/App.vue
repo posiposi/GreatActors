@@ -7,16 +7,20 @@
 
 <script>
 import Sidebar from './components/layouts/sidebar.vue'
+import '@mdi/font/css/materialdesignicons.css'
 
 export default {
 	components: {
 		Sidebar,
 	},
+	icons: {
+		iconfont: 'mdi',
+	}
 }
 </script>
 
 <style scoped>
-	.sidebar {
-		float: left;
-	}
+.sidebar {
+	float: left;
+}
 </style>
