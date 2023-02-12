@@ -13,27 +13,24 @@
 				<th class="text-left">
 					上映時間
 				</th>
+				<th class="text-left"></th>
+				<th class="text-left"></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr v-for="movie in movies" :key="movie.name">
 				<td>{{ movie.name }}</td>
-				<td>{{ movie.releaseYear }}</td>
-				<td>{{ movie.airTime }}</td>
+				<td>{{ movie.releaseYear }}年</td>
+				<td>{{ movie.airTime }}分</td>
+				<td><v-btn color="light-blue">詳細</v-btn></td>
+				<td><v-btn color="red">削除</v-btn></td>
 			</tr>
 		</tbody>
 	</v-table>
-
-	<!-- <h1>{{ count }}</h1>
-	<v-btn color="blue" @click="incrementCount()">Increment</v-btn> -->
 </template>
 
 <script setup>
 import { ref } from "vue";
-const count = ref(0);
-const incrementCount = () => {
-	count.value++
-};
 
 const movies = [
 	{
