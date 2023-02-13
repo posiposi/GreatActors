@@ -11,10 +11,10 @@ class MovieService
      *
      * @return Collection<Movie> $movies
      */
-    public function getMovieList()
+    public function getMovieListJson()
     {
         $movies = Movie::all();
 
-        return $movies;
+        return response()->json(['movies' => $movies]);
     }
 }
