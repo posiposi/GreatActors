@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Service\MovieService;
+use App\Services\MovieService;
 
 class MovieController extends Controller
 {
@@ -11,7 +11,7 @@ class MovieController extends Controller
 
     public function __construct()
     {
-        $this->movie_service = App::make(MovieService::class);
+        $this->movie_service = app()->make(MovieService::class);
     }
 
     /**
