@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Faker\Factory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class MovieSeeder extends Seeder
 {
@@ -17,9 +16,10 @@ class MovieSeeder extends Seeder
     public function run()
     {
         $faker = Factory::create('ja_JP');
+        $faker->addProvider(new \Xylis\FakerCinema\Provider\Movie($faker));
         for ($i = 0; $i < 5; $i++) {
             DB::table('movies')->insert([
-                'movie_name' => $faker->name,
+                'movie_name' => $faker->movie,
                 'release_year' => random_int(1920, 2023),
                 'air_time' => random_int(90, 140),
                 'created_at' => now(),
