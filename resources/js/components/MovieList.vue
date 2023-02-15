@@ -19,9 +19,9 @@
 		</thead>
 		<tbody>
 			<tr v-for="movie in movies" :key="movie.name">
-				<td>{{ movie.name }}</td>
-				<td>{{ movie.releaseYear }}年</td>
-				<td>{{ movie.airTime }}分</td>
+				<td>{{ movie.movie_name }}</td>
+				<td>{{ movie.release_year }}年</td>
+				<td>{{ movie.air_time }}分</td>
 				<td><v-btn color="light-blue">詳細</v-btn></td>
 				<td><v-btn color="red">削除</v-btn></td>
 			</tr>
@@ -30,23 +30,18 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
-const movies = [
-	{
-		name: 'アポロ13',
-		releaseYear: 1995,
-		airTime: 120
-	},
-	{
-		name: '孤高のメス',
-		releaseYear: 2010,
-		airTime: 110
-	},
-	{
-		name: 'スラムダンク',
-		releaseYear: 2022,
-		airTime: 130
-	},
-]
+// 映画レコード用定数を初期化
+const movies = ref();
+
+// 映画テーブルの全レコードをAPI経由で取得する
+const getAllMoviesList = () => {
+	axios.get('/api/movies')
+		.then(response => movies.value = response.data.movies)
+}
+
+onMounted(() => {
+	getAllMoviesList();
+})
 </script>
