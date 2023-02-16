@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('movies', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('movie_name');
             $table->integer('release_year');
             $table->integer('air_time');
