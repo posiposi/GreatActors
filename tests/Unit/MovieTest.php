@@ -18,9 +18,9 @@ class MovieTest extends TestCase
     public function testMovieFactoryAble()
     {
         // 映画テーブルにレコードがない前提の確認
-        self::assertEmpty(Movie::first());
+        $this->assertEmpty(Movie::first());
         // 映画テーブルにレコードがファクトリで投入できたかを確認する
         $movies_factory = Movie::factory()->create();
-        self::assertNotEmpty($movies_factory->first());
+        $this->assertNotEmpty($movies_factory->first());
     }
 }
