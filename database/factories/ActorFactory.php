@@ -10,14 +10,14 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class ActorFactory extends Factory
 {
     /**
-     * Define the model's default state.
+     * 俳優テーブルに対してデータ設定を実行する
      *
      * @return array<string, mixed>
      */
     public function definition()
     {
         return [
-            'actor_name' => $this->faker->actor(),
+            'actor_name' => $this->faker->name()
         ];
     }
 }
