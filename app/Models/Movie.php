@@ -25,6 +25,6 @@ class Movie extends Model
      */
     public function actors()
     {
-        $this->belongsToMany(Actor::class);
+        return $this->belongsToMany(Actor::class, 'actor_movie', 'movie_id', 'actor_id')->withTimestamps();
     }
 }
