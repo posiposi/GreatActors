@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    protected $primaryKey = 'id';
+
     /**
      * 役割テーブル作成マイグレーションを実行する
      *
@@ -14,7 +16,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('roles', function (Blueprint $table) {
-            $table->id();
+            $table->boolean('id')->primary();
             $table->string('role');
             $table->timestamps();
         });
