@@ -23,6 +23,16 @@ class Actor extends Model
      */
     public function movies()
     {
-        $this->belongsToMany(Movie::class);
+        return $this->belongsToMany(Movie::class, 'actor_movie', 'actor_id', 'movie_id')->withTimestamps();
+    }
+
+    /**
+     * リレーション:俳優が出演するこの映画での役割
+     *
+     * @return void
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Movie::class)->using(ActorMovie::class)->withPivot(['role_id']);
     }
 }
