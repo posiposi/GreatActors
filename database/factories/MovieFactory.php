@@ -10,11 +10,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class MovieFactory extends Factory
 {
     /**
-     * Define the model's default state.
+     * 映画テーブルに投入するテストデータ定義
      *
-     * @return array<string, mixed>
+     * @return void
      */
-    public function definition(): array
+    public function definition()
     {
         return [
             'movie_name' => $this->faker->name(),
