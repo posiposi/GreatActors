@@ -18,12 +18,12 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr v-for="movie in movies" :key="movie.name">
+			<tr v-for="movie in movies" :key="movie.id">
 				<td>{{ movie.movie_name }}</td>
 				<td>{{ movie.release_year }}年</td>
 				<td>{{ movie.air_time }}分</td>
 				<td><v-btn color="light-blue">詳細</v-btn></td>
-				<td><v-btn color="red">削除</v-btn></td>
+				<td><v-btn color="red" @click="deleteMovie(movie.id)">削除</v-btn></td>
 			</tr>
 		</tbody>
 	</v-table>
@@ -33,12 +33,20 @@
 import { onMounted, ref } from "vue";
 
 // 映画レコード用定数を初期化
-const movies = ref();
+const movies = ref([]);
 
 // 映画テーブルの全レコードをAPI経由で取得する
 const getAllMoviesList = () => {
 	axios.get('/api/movies')
 		.then(response => movies.value = response.data.movies)
+}
+
+// 該当の映画レコードを削除する
+const deleteMovie = (movie_id) => {
+	axios.delete('/api/' + movie_id + '/delete')
+		.then(() => {
+			getAllMoviesList();
+		});
 }
 
 onMounted(() => {
