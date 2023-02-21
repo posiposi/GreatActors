@@ -23,10 +23,22 @@
 				<td>{{ movie.release_year }}年</td>
 				<td>{{ movie.air_time }}分</td>
 				<td><v-btn color="light-blue">詳細</v-btn></td>
-				<td><v-btn color="red" @click="deleteMovie(movie.id)">削除</v-btn></td>
+				<td><v-btn color="red" @click="confirmDeleteDialog(movie.id, movie.movie_name)">削除</v-btn></td>
 			</tr>
 		</tbody>
 	</v-table>
+
+	<v-dialog v-model="isDialog" persistent max-width="290">
+		<v-card>
+			<v-card-title class="headline">削除確認</v-card-title>
+			<v-card-text>{{ movieName }}を削除してもよろしいですか？</v-card-text>
+			<v-card-actions>
+				<v-spacer></v-spacer>
+				<v-btn color="green darken-1" text @click="isDialog=false">キャンセル</v-btn>
+				<v-btn color="green darken-1" text @click="deleteMovie(movieId)">削除</v-btn>
+			</v-card-actions>
+		</v-card>
+	</v-dialog>
 </template>
 
 <script setup>
@@ -34,6 +46,12 @@ import { onMounted, ref } from "vue";
 
 // 映画レコード用定数を初期化
 const movies = ref([]);
+// ダイアログ初期値は非表示
+const isDialog = ref(false);
+// 映画ID
+const movieId = ref();
+// 映画名
+const movieName = ref();
 
 // 映画テーブルの全レコードをAPI経由で取得する
 const getAllMoviesList = () => {
@@ -41,11 +59,20 @@ const getAllMoviesList = () => {
 		.then(response => movies.value = response.data.movies)
 }
 
+// 映画削除確認ダイアログを表示する
+const confirmDeleteDialog = (movie_id, movie_name) => {
+	// ダイアログを表示
+	isDialog.value = true;
+	movieId.value = movie_id;
+	movieName.value = movie_name;
+}
+
 // 該当の映画レコードを削除する
 const deleteMovie = (movie_id) => {
 	axios.delete('/api/' + movie_id + '/delete')
 		.then(() => {
 			getAllMoviesList();
+			isDialog.value = false;
 		});
 }
 
