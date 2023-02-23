@@ -55,6 +55,6 @@ class MovieTest extends TestCase
         $movie = Movie::first();
         $movie->delete();
         // 上記で削除したレコードが存在しないことを確認する
-        $this->assertModelMissing($movie);
+        $this->assertSoftDeleted($movie);
     }
 }
