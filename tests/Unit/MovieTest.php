@@ -25,6 +25,11 @@ class MovieTest extends TestCase
         $this->assertNotEmpty($movies_factory->first());
     }
 
+    /**
+     * 映画-俳優テーブル間リレーションテスト
+     *
+     * @return void
+     */
     public function testMovieBelongsToManyActor()
     {
         // 投入テストデータ数
@@ -33,5 +38,23 @@ class MovieTest extends TestCase
         Movie::factory()->has(Actor::factory()->count($data_count))->make();
 
         $this->assertEquals(Movie::count(), Actor::count());
+    }
+
+    /**
+     * 映画削除メソッドテスト
+     *
+     * @return void
+     */
+    public function testMovieDelete()
+    {
+        // 投入テストデータ数
+        $data_count = 3;
+        // 映画テーブルにテストデータを投入
+        Movie::factory()->count($data_count)->create();
+
+        $movie = Movie::first();
+        $movie->delete();
+        // 上記で削除したレコードが存在しないことを確認する
+        $this->assertModelMissing($movie);
     }
 }
