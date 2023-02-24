@@ -25,14 +25,14 @@ class MovieController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 映画情報を登録する
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request 登録する映画情報リクエスト
+     * @return void
      */
     public function store(Request $request)
     {
-        //
+        $this->movie_service->registerMovie($request);
     }
 
     /**
