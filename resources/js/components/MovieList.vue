@@ -1,6 +1,6 @@
 <template>
 	<v-table>
-		<thead>
+		<thead class="bg-grey-lighten-3">
 			<tr>
 				<th class="text-left">
 					映画名
