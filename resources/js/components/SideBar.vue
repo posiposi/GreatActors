@@ -20,7 +20,11 @@
 </template>
 
 <style>
-.router_link {
+.router_link{
 	text-decoration: none;
+}
+
+a:hover{
+	text-decoration: underline;
 }
 </style>
