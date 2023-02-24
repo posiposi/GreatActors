@@ -63,7 +63,7 @@ class MovieTest extends TestCase
      *
      * @return void
      */
-    public function testMoviePost()
+    public function testMovieStore()
     {
         // テスト用登録リクエスト
         $response = $this->post(route('movie.store'), [
