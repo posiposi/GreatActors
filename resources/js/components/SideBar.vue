@@ -2,7 +2,7 @@
 	<v-card>
 		<v-layout>
 			<v-navigation-drawer color="red-darken-4" permanent>
-				<v-list nav>
+				<v-list nav class="font-italic">
 					<v-list-item prepend-icon="mdi-filmstrip" class="text-h5">
 						<router-link class="router_link text-white" to="/">映画一覧</router-link>
 					</v-list-item>
