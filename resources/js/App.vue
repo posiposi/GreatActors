@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Sidebar from './components/layouts/SideBar.vue'
+import Sidebar from './components/SideBar.vue'
 import '@mdi/font/css/materialdesignicons.css'
 
 export default {
