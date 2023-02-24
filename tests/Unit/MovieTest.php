@@ -66,7 +66,7 @@ class MovieTest extends TestCase
     public function testMoviePost()
     {
         // テスト用登録リクエスト
-        $response = $this->post('/api/movie/post', [
+        $response = $this->post('/api/movie/store', [
             'id' => 100000,
             'movie_name' => 'テスト映画名',
             'release_year' => 9999,
