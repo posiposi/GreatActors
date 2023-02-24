@@ -1,8 +1,6 @@
 <template>
-	<h1>映画一覧</h1>
-
 	<v-table>
-		<thead>
+		<thead class="bg-grey-lighten-3">
 			<tr>
 				<th class="text-left">
 					映画名
@@ -34,7 +32,7 @@
 			<v-card-text>{{ movieName }}を削除してもよろしいですか？</v-card-text>
 			<v-card-actions>
 				<v-spacer></v-spacer>
-				<v-btn color="green darken-1" text @click="isDialog=false">キャンセル</v-btn>
+				<v-btn color="green darken-1" text @click="isDialog = false">キャンセル</v-btn>
 				<v-btn color="green darken-1" text @click="deleteMovie(movieId)">削除</v-btn>
 			</v-card-actions>
 		</v-card>
