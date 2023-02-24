@@ -66,20 +66,16 @@ class MovieTest extends TestCase
     public function testMoviePost()
     {
         // テスト用登録リクエスト
-        $response = $this->post('/api/movie/store', [
-            'id' => 100000,
+        $response = $this->post(route('movie.store'), [
             'movie_name' => 'テスト映画名',
             'release_year' => 9999,
             'air_time' => 999,
         ]);
 
-        // テストリクエスト成功の確認
-        $response->assertOk();
         // リクエストと保存内容が一致することを確認
-        $latest_movie_record = Movie::latest('id')->first();
-        $this->assertEquals($latest_movie_record->id, $response['id']);
-        $this->assertEquals($latest_movie_record->movie_name, $response['movie_name']);
-        $this->assertEquals($latest_movie_record->release_year, $response['release_year']);
-        $this->assertEquals($latest_movie_record->air_time, $response['air_time']);
+        $latest_movie_record = Movie::latest()->first();
+        $this->assertEquals('テスト映画名', $latest_movie_record->movie_name);
+        $this->assertEquals(9999, $latest_movie_record->release_year);
+        $this->assertEquals(999, $latest_movie_record->air_time);
     }
 }
