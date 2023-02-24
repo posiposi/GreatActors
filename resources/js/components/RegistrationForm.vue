@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-tabs v-model="tab" bg-color="primary">
+    <v-tabs v-model="tab" bg-color="grey-lighten-3" slider-color="orange">
       <v-tab value="movie-tab">映画登録</v-tab>
       <v-tab value="actor-tab">俳優登録</v-tab>
     </v-tabs>
@@ -25,7 +25,7 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-btn color="light-blue">
+                <v-btn class="register-btn" outlined>
                   登録
                 </v-btn>
               </v-row>
@@ -76,3 +76,10 @@ export default {
   }),
 }
 </script>
+
+<style>
+.register-btn {
+  font-weight: bold;
+  border: solid black;
+}
+</style>
