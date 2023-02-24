@@ -58,6 +58,11 @@ class MovieTest extends TestCase
         $this->assertSoftDeleted($movie);
     }
 
+    /**
+     * 映画登録メソッドテスト
+     *
+     * @return void
+     */
     public function testMoviePost()
     {
         // テスト用登録リクエスト
