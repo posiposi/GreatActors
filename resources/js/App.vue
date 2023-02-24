@@ -1,8 +1,6 @@
 <template>
 	<sidebar class="sidebar"></sidebar>
-	<v-container class="counter">
-		<router-view></router-view>
-	</v-container>
+	<router-view></router-view>
 </template>
 
 <script>
