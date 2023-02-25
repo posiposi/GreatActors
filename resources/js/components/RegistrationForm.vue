@@ -12,16 +12,16 @@
             <v-container>
               <v-row>
                 <v-col cols="12" md="4">
-                  <v-text-field v-model="actor_name" :rules="nameRules" :counter="10" label="映画名" required></v-text-field>
+                  <v-text-field v-model="actor_name" :rules="nameRules" label="映画名" required></v-text-field>
                 </v-col>
 
                 <v-col cols="12" md="4">
-                  <v-text-field v-model="release_year" :rules="nameRules" :counter="10" label="公開年" suffix="年"
+                  <v-text-field v-model="release_year" :rules="nameRules" :counter="4" label="公開年" suffix="年"
                     required></v-text-field>
                 </v-col>
 
                 <v-col cols="12" md="4">
-                  <v-text-field v-model="air_time" :rules="emailRules" label="上映時間" suffix="分" required></v-text-field>
+                  <v-text-field v-model="air_time" :rules="emailRules" :counter="3" label="上映時間" suffix="分" required></v-text-field>
                 </v-col>
               </v-row>
               <v-row>
