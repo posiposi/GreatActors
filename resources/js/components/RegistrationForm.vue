@@ -8,24 +8,25 @@
     <v-card-text>
       <v-window v-model="tab">
         <v-window-item value="movie-tab">
-          <v-form v-model="valid">
+          <v-form ref="valid">
             <v-container>
               <v-row>
                 <v-col cols="12" md="4">
-                  <v-text-field v-model="actor_name" :rules="nameRules" label="映画名" required></v-text-field>
+                  <v-text-field v-model="movie_name" :rules="[requiredMoveiName]" label="映画名"></v-text-field>
                 </v-col>
 
                 <v-col cols="12" md="4">
-                  <v-text-field v-model="release_year" :rules="nameRules" :counter="4" label="公開年" suffix="年"
-                    required></v-text-field>
+                  <v-text-field v-model="release_year" :rules="[limitReleaseYearLength]" :counter="4" label="公開年"
+                    suffix="年"></v-text-field>
                 </v-col>
 
                 <v-col cols="12" md="4">
-                  <v-text-field v-model="air_time" :rules="emailRules" :counter="3" label="上映時間" suffix="分" required></v-text-field>
+                  <v-text-field v-model="air_time" :rules="[limitAitTimeLength]" :counter="3" label="上映時間"
+                    suffix="分"></v-text-field>
                 </v-col>
               </v-row>
               <v-row>
-                <v-btn class="register-btn" outlined>
+                <v-btn class="register-btn" outlined @click="submit">
                   登録
                 </v-btn>
               </v-row>
@@ -39,41 +40,89 @@
       </v-window>
     </v-card-text>
   </v-card>
+
+  <v-dialog v-model="isDialog" persistent max-width="290">
+    <v-card>
+      <v-card-title class="headline">登録確認</v-card-title>
+      <v-card-text>登録してもよろしいですか？</v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="green darken-1" text @click="isDialog = false">キャンセル</v-btn>
+        <v-btn color="green darken-1" text>OK</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
-<script>
-export default {
-  data: () => ({
-    tab: null,
-    valid: false,
-    actor_name: '',
-    release_year: '',
-    nameRules: [
-      value => {
-        if (value) return true
+<script setup>
+import { ref } from 'vue';
 
-        return 'Name is requred.'
-      },
-      value => {
-        if (value?.length <= 10) return true
+const tab = ref(null);
+const valid = ref(false);
+const movie_name = ref();
+const release_year = ref();
+const air_time = ref();
 
-        return 'Name must be less than 10 characters.'
-      },
-    ],
-    air_time: '',
-    emailRules: [
-      value => {
-        if (value) return true
+// 送信成否ステータス
+const submitStatus = ref(false);
 
-        return 'E-mail is requred.'
-      },
-      value => {
-        if (/.+@.+\..+/.test(value)) return true
+// ダイアログ初期値は非表示
+const isDialog = ref(false);
 
-        return 'E-mail must be valid.'
-      },
-    ],
-  }),
+/**
+ * 映画名入力必須バリデーション
+ * @param {string} value 映画名フォームの入力値
+ */
+const requiredMoveiName = (value) => {
+  if (value) {
+    return true;
+  }
+  return '映画名を入力してください。';
+}
+
+/**
+ * 公開年半角4桁入力バリデーション
+ * @param {int} value 公開年フォームの入力値
+ */
+const limitReleaseYearLength = (value) => {
+  if (value.length == 4 && value.match(/^[0-9]+$/)) {
+    return true;
+  }
+  return '公開年は半角数字4桁で入力してください。';
+}
+
+/**
+ * 上映時間3桁入力バリデーション
+ * @param {int} value 上映時間フォームの入力値
+ */
+const limitAitTimeLength = (value) => {
+  if (value.length == 3 && value.match(/^[0-9]+$/)) {
+    return true;
+  }
+  return '上映時間は半角数字3桁で入力してください。';
+}
+
+/**
+ * 送信時に全バリデーションが通過しているかを確認
+ */
+const submit = async () => {
+  // 各フォームのバリデーション通過確認
+  const validResult = await valid.value.validate();
+  // 通過時は登録確認ダイアログを表示する
+  if (validResult.valid) {
+    submitStatus.value = true;
+    confirmRegisterDialog();
+  } else {
+    submitStatus.value = false;
+  }
+}
+
+/**
+ * 登録確認ダイアログを表示する
+ */
+const confirmRegisterDialog = () => {
+  // 登録確認ダイアログを表示
+  isDialog.value = true;
 }
 </script>
 
