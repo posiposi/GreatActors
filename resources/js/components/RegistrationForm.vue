@@ -48,14 +48,30 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="green darken-1" text @click="isDialog = false">キャンセル</v-btn>
-        <v-btn color="green darken-1" text>OK</v-btn>
+        <v-btn color="green darken-1" text @click="registerMovie();">OK</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
+
+  <v-dialog v-model="completedDialog" width="auto">
+    <v-card>
+      <v-card-text>
+        映画登録が完了しました!
+      </v-card-text>
+      <v-card-actions>
+        <v-btn color="primary" block @click="completedDialog = false">閉じる</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+
+  <!-- 登録完了ダイアログコンポーネント -->
+  <!-- <register-completed-dialog :completedDialog="completedDialogStatus"></register-completed-dialog> -->
 </template>
 
 <script setup>
+import axios from 'axios';
 import { ref } from 'vue';
+import RegisterCompletedDialog from './RegisterCompletedDialog.vue';
 
 const tab = ref(null);
 const valid = ref(false);
@@ -66,8 +82,12 @@ const air_time = ref();
 // 送信成否ステータス
 const submitStatus = ref(false);
 
-// ダイアログ初期値は非表示
+// 登録確認ダイアログ初期値は非表示
 const isDialog = ref(false);
+
+// 登録完了ダイアログ初期値は非表示
+// const completedDialogStatus = ref(false);
+const completedDialog = ref(false);
 
 /**
  * 映画名入力必須バリデーション
@@ -123,6 +143,17 @@ const submit = async () => {
 const confirmRegisterDialog = () => {
   // 登録確認ダイアログを表示
   isDialog.value = true;
+}
+
+/**
+ * 映画登録API呼び出し
+ */
+const registerMovie = () => {
+  axios.post('/api/movie/store', {
+    movie_name: movie_name.value,
+    release_year: release_year.value,
+    air_time: air_time.value,
+  }).then(isDialog.value = false, completedDialog.value = true)
 }
 </script>
 
