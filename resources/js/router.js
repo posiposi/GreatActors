@@ -1,5 +1,6 @@
 import MovieList from './components/MovieList.vue';
 import RegistrationForm from './components/RegistrationForm.vue';
+import ActorList from './components/ActorList.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
@@ -14,6 +15,12 @@ const routes = [
 		path: '/registration',
 		name: 'RegistrationForm',
 		component: RegistrationForm,
+	},
+	// 俳優一覧ページ
+	{
+		path: '/actors',
+		name: 'ActorList',
+		component: ActorList,
 	},
 ];
 const router = createRouter({

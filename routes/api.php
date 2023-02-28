@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActorController;
 use App\Http\Controllers\MovieController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,3 +25,5 @@ Route::get('/movies', [MovieController::class, 'getAllMovieList'])->name('movies
 Route::delete('/{movieId}/delete', [MovieController::class, 'destroy']);
 
 Route::post('/movie/store', [MovieController::class, 'store'])->name('movie.store');
+
+Route::get('/actors', [ActorController::class, 'index'])->name('actors.index');

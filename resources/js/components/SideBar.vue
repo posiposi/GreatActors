@@ -7,7 +7,7 @@
 						<router-link class="router_link text-white" to="/">映画一覧</router-link>
 					</v-list-item>
 					<v-list-item prepend-icon="mdi-account-details" class="text-h5">
-						<router-link class="router_link text-white" to="#">俳優一覧</router-link>
+						<router-link class="router_link text-white" to="/actors">俳優一覧</router-link>
 					</v-list-item>
 					<v-list-item prepend-icon="mdi-plus-box" class="text-h5">
 						<router-link class="router_link text-white" to="/registration">登録</router-link>
@@ -20,11 +20,11 @@
 </template>
 
 <style>
-.router_link{
+.router_link {
 	text-decoration: none;
 }
 
-a:hover{
+a:hover {
 	text-decoration: underline;
 }
 </style>
