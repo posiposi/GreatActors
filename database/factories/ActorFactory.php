@@ -12,7 +12,7 @@ class ActorFactory extends Factory
     /**
      * 俳優テーブルに対してデータ設定を実行する
      *
-     * @return array<string, mixed>
+     * @return void
      */
     public function definition()
     {
