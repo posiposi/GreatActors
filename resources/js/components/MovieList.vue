@@ -21,7 +21,11 @@
 				<td>{{ movie.release_year }}年</td>
 				<td>{{ movie.air_time }}分</td>
 				<td><v-btn color="light-blue">詳細</v-btn></td>
-				<td><v-btn color="red" @click="confirmDeleteDialog(movie.id, movie.movie_name)">削除</v-btn></td>
+				<td>
+					<v-btn icon size="small" color="red-darken-4" @click="confirmDeleteDialog(movie.id, movie.movie_name)">
+						<v-icon>mdi-Delete</v-icon>
+					</v-btn>
+				</td>
 			</tr>
 		</tbody>
 	</v-table>
