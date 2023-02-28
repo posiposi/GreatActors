@@ -11,7 +11,7 @@ class ActorTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * A basic unit test example.
+     * 俳優モデルのファクトリテスト
      *
      * @return void
      */
@@ -22,5 +22,22 @@ class ActorTest extends TestCase
         // 俳優テーブルにレコードがファクトリで投入できたかを確認する
         $actors_factory = Actor::factory()->create();
         $this->assertNotEmpty($actors_factory->first());
+    }
+
+    /**
+     * 俳優登録メソッドテスト
+     *
+     * @return void
+     */
+    public function testActorStore()
+    {
+        // テスト用登録リクエスト
+        $response = $this->post(route('actor.store'), [
+            'actor_name' => '俳優太郎',
+        ]);
+
+        // リクエストと最新の保存内容が一致することを確認
+        $latest_actor_record = Actor::latest()->first();
+        $this->assertEquals('俳優太郎', $latest_actor_record->movie_name);
     }
 }
