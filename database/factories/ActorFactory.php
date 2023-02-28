@@ -17,7 +17,9 @@ class ActorFactory extends Factory
     public function definition()
     {
         return [
-            'actor_name' => $this->faker->name()
+            'actor_name' => $this->faker->name(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }
