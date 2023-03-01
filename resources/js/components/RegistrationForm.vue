@@ -35,7 +35,7 @@
         </v-window-item>
 
         <v-window-item value="actor-tab">
-          Two
+          <ActorRegistrationForm></ActorRegistrationForm>
         </v-window-item>
       </v-window>
     </v-card-text>
@@ -71,7 +71,7 @@
 <script setup>
 import axios from 'axios';
 import { ref } from 'vue';
-import RegisterCompletedDialog from './RegisterCompletedDialog.vue';
+import ActorRegistrationForm from './ActorRegistrationForm.vue';
 
 const tab = ref(null);
 const valid = ref(false);
