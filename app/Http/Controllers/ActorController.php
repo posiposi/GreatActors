@@ -25,14 +25,14 @@ class ActorController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 俳優レコードを登録する
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request 登録する俳優のリクエスト
+     * @return void
      */
     public function store(Request $request)
     {
-        //
+        $this->actor_service->registerActor($request);
     }
 
     /**
