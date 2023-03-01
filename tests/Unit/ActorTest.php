@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Actor;
+use App\Services\ActorService;
 
 class ActorTest extends TestCase
 {
@@ -39,5 +40,24 @@ class ActorTest extends TestCase
         // リクエストと最新の保存内容が一致することを確認
         $latest_actor_record = Actor::latest()->first();
         $this->assertEquals('俳優太郎', $latest_actor_record->movie_name);
+    }
+
+    /**
+     * 俳優削除メソッドテスト
+     *
+     * @return void
+     */
+    public function testActorDelete()
+    {
+        // 投入テストデータ数
+        $data_count = 3;
+        // 俳優テーブルにテストデータを投入
+        Actor::factory()->count($data_count)->create();
+
+        $actor = Actor::first();
+        $actor_service = new ActorService();
+        $actor_service->deleteActorRecord($actor->id);
+        // 上記で削除したレコードが存在しないことを確認する
+        $this->assertSoftDeleted($actor);
     }
 }
