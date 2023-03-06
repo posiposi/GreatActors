@@ -39,7 +39,7 @@ class ActorTest extends TestCase
 
         // リクエストと最新の保存内容が一致することを確認
         $latest_actor_record = Actor::latest()->first();
-        $this->assertEquals('俳優太郎', $latest_actor_record->movie_name);
+        $this->assertEquals('俳優太郎', $latest_actor_record->actor_name);
     }
 
     /**

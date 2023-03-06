@@ -7,36 +7,58 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-btn class="register-btn" outlined>
+        <v-btn class="register-btn" outlined @click="submitActor">
           登録
         </v-btn>
       </v-row>
     </v-container>
   </v-form>
+
+  <!-- 登録確認ダイアログ -->
+  <v-dialog v-model="isConfirmRegisterDialog" persistent max-width="290">
+    <v-card>
+      <v-card-title class="headline">登録確認</v-card-title>
+      <v-card-text>登録してもよろしいですか？</v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="green darken-1" text @click="isConfirmRegisterDialog = false">キャンセル</v-btn>
+        <v-btn color="green darken-1" text @click="registerActor">OK</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+
+  <!-- 登録完了ダイアログ -->
+  <v-dialog v-model="isCompletedDialog" width="auto">
+    <v-card>
+      <v-card-text>
+        映画登録が完了しました!
+      </v-card-text>
+      <v-card-actions>
+        <v-btn color="primary" block @click="isCompletedDialog = false">閉じる</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup>
+import axios from 'axios';
 import { ref } from 'vue';
 
+/** 入力フォームバリデーション用定数 */
+const valid = ref(false);
 /** 俳優名フォーム */
 const actor_name = ref();
-
-// // 送信成否ステータス
-// const submitStatus = ref(false);
-
-// // 登録確認ダイアログ初期値は非表示
-// const isDialog = ref(false);
-
-// 登録完了ダイアログ初期値は非表示
-// const completedDialogStatus = ref(false);
-// const completedDialog = ref(false);
+/** 登録確認ダイアログ表示用定数(初期値は非表示) */
+const isConfirmRegisterDialog = ref(false);
+/** 登録完了ダイアログ(初期値は非表示) */
+const isCompletedDialog = ref(false);
 
 /**
  * 俳優名入力必須バリデーション
- * @param {string} input_actor_name 映画名フォームの入力値
+ * @param {string} value 俳優名フォームの入力値
  */
-const requiredActorName = (input_actor_name) => {
-  if (input_actor_name) {
+const requiredActorName = (value) => {
+  if (value) {
     return true;
   }
   return '俳優名を入力してください。';
@@ -45,34 +67,29 @@ const requiredActorName = (input_actor_name) => {
 /**
  * 送信時に全バリデーションが通過しているかを確認
  */
-const submit = async () => {
-  // 各フォームのバリデーション通過確認
+const submitActor = async () => {
+  // フォームのバリデーション通過確認
   const validResult = await valid.value.validate();
   // 通過時は登録確認ダイアログを表示する
   if (validResult.valid) {
-    submitStatus.value = true;
-    confirmRegisterDialog();
-  } else {
-    submitStatus.value = false;
+    showConfirmDialog();
   }
+}
+
+/**
+ * 俳優登録API呼び出し
+ */
+const registerActor = () => {
+  axios.post('/api/actor/store', {
+    actor_name: actor_name.value,
+  }).then(isConfirmRegisterDialog.value = false, isCompletedDialog.value = true)
 }
 
 /**
  * 登録確認ダイアログを表示する
  */
-const confirmRegisterDialog = () => {
+const showConfirmDialog = () => {
   // 登録確認ダイアログを表示
-  isDialog.value = true;
+  isConfirmRegisterDialog.value = true;
 }
-
-// /**
-//  * 映画登録API呼び出し
-//  */
-// const registerMovie = () => {
-//   axios.post('/api/movie/store', {
-//     movie_name: movie_name.value,
-//     release_year: release_year.value,
-//     air_time: air_time.value,
-//   }).then(isDialog.value = false, completedDialog.value = true)
-// }
 </script>

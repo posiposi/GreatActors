@@ -34,6 +34,7 @@
           </v-form>
         </v-window-item>
 
+        <!-- 俳優登録フォームコンポーネント -->
         <v-window-item value="actor-tab">
           <ActorRegistrationForm></ActorRegistrationForm>
         </v-window-item>
@@ -48,7 +49,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="green darken-1" text @click="isDialog = false">キャンセル</v-btn>
-        <v-btn color="green darken-1" text @click="registerMovie();">OK</v-btn>
+        <v-btn color="green darken-1" text @click="registerMovie">OK</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -63,9 +64,6 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
-
-  <!-- 登録完了ダイアログコンポーネント -->
-  <!-- <register-completed-dialog :completedDialog="completedDialogStatus"></register-completed-dialog> -->
 </template>
 
 <script setup>

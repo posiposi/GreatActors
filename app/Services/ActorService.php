@@ -29,4 +29,16 @@ class ActorService
         $actor = Actor::findOrFail($actor_id);
         $actor->delete();
     }
+
+    /**
+     * 俳優情報を登録する
+     *
+     * @param Request $actor_register_request 登録する俳優情報リクエスト
+     * @return void
+     */
+    public function registerActor($actor_register_request)
+    {
+        $register_params = $actor_register_request->only('actor_name');
+        Actor::create($register_params);
+    }
 }
