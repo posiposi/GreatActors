@@ -17,7 +17,9 @@ class Movie extends Model
     protected $fillable = [
         'movie_name',
         'release_year',
-        'air_time'
+        'air_time',
+        'distributor_id',
+        'genre_id',
     ];
 
     /**
