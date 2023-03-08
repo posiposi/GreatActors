@@ -15,7 +15,7 @@ class DistributorSeeder extends Seeder
      */
     public function run()
     {
-        $movies = Movie::factory()->count(3)->create();
-        Distributor::factory(3)->recycle($movies)->create();
+        $movies = Movie::factory()->count(1)->create();
+        Distributor::factory(1)->recycle($movies)->create();
     }
 }
