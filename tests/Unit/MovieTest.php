@@ -70,6 +70,7 @@ class MovieTest extends TestCase
             'movie_name' => 'テスト映画名',
             'release_year' => 9999,
             'air_time' => 999,
+            'distributor_name' => 'テスト配給会社名',
         ]);
 
         // リクエストと保存内容が一致することを確認
@@ -77,5 +78,6 @@ class MovieTest extends TestCase
         $this->assertEquals('テスト映画名', $latest_movie_record->movie_name);
         $this->assertEquals(9999, $latest_movie_record->release_year);
         $this->assertEquals(999, $latest_movie_record->air_time);
+        $this->assertEquals('テスト配給会社名', $latest_movie_record->distributor->distributor_name);
     }
 }
