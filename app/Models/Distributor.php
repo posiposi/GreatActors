@@ -12,7 +12,6 @@ class Distributor extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'movie_id',
         'distributor_name',
     ];
 }
