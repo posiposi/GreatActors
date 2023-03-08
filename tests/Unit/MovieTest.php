@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Movie;
 use App\Models\Actor;
+use App\Models\Distributor;
 
 class MovieTest extends TestCase
 {
@@ -32,12 +33,27 @@ class MovieTest extends TestCase
      */
     public function testMovieBelongsToManyActor()
     {
-        // 投入テストデータ数
+        // 投入データ数
         $data_count = 3;
         // 映画テーブル、俳優テーブルにテストデータを投入
         Movie::factory()->has(Actor::factory()->count($data_count))->make();
 
         $this->assertEquals(Movie::count(), Actor::count());
+    }
+
+    /**
+     * 映画-配給会社テーブル間リレーションテスト
+     *
+     * @return void
+     */
+    public function testMovieBelongsToDistributor()
+    {
+        // 投入テストデータ数
+        $data_count = 3;
+        // 映画テーブル、配給会社テーブルにテストデータを投入
+        Movie::factory()->has(Distributor::factory()->count($data_count))->make();
+
+        $this->assertEquals(Movie::count(), Distributor::count());
     }
 
     /**
