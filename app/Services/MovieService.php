@@ -26,7 +26,7 @@ class MovieService
      */
     public function registerMovie($movie_register_request)
     {
-        $register_params = $movie_register_request->only('movie_name', 'release_year', 'air_time');
+        $register_params = $movie_register_request->only('movie_name', 'release_year', 'air_time', 'distributor_id', 'genre_id');
         Movie::create($register_params);
     }
 

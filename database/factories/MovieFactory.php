@@ -20,6 +20,8 @@ class MovieFactory extends Factory
             'movie_name' => $this->faker->name(),
             'release_year' => random_int(1900, 2023),
             'air_time' => random_int(60, 140),
+            'distributor_id' => random_int(0, 1),
+            'genre_id' => random_int(0, 5),
             'created_at' => now(),
             'updated_at' => now(),
         ];
