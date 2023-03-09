@@ -18,7 +18,6 @@ class DistributorFactory extends Factory
     public function definition()
     {
         return [
-            'movie_id' => Movie::Factory(),
             'distributor_name' => $this->faker->name(),
             'created_at' => now(),
             'updated_at' => now(),
