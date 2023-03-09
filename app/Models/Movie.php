@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Distributor;
 
 /**
  * 映画クラス
@@ -30,5 +31,15 @@ class Movie extends Model
     public function actors()
     {
         return $this->belongsToMany(Actor::class, 'actor_movie', 'movie_id', 'actor_id')->withTimestamps();
+    }
+
+    /**
+     * リレーション：この映画の配給会社
+     *
+     * @return void
+     */
+    public function distributor()
+    {
+        return $this->belongsTo(Distributor::class, 'id', 'distributor_id');
     }
 }

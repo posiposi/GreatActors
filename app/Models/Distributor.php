@@ -14,4 +14,14 @@ class Distributor extends Model
     protected $fillable = [
         'distributor_name',
     ];
+
+    /**
+     * リレーション：この会社の配給映画
+     *
+     * @return void
+     */
+    public function movies()
+    {
+        return $this->hasMany(Movie::class, 'distributor_id', 'id');
+    }
 }
