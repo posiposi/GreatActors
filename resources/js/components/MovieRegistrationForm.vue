@@ -17,6 +17,13 @@
         </v-col>
       </v-row>
       <v-row>
+        <v-col cols="12" md="4">
+          <v-select v-model="distributor" :items="distributors_list" item-title="distributor_name"
+            item-value="distributor_id" label="配給会社" :rules="[requiredDistributor]" return-object single-line
+            clearable></v-select>
+        </v-col>
+      </v-row>
+      <v-row>
         <v-btn class="register-btn" outlined @click="submit">
           登録
         </v-btn>
@@ -64,6 +71,13 @@ const air_time = ref();
 const isConfirmRegisterDialog = ref(false);
 /** 登録完了ダイアログ(初期値は非表示) */
 const isCompletedDialog = ref(false);
+/** 配給会社ドロップダウンリスト */
+const distributor = ref();
+/** 配給会社ドロップダウンリスト内容 */
+const distributors_list = ref([
+  { distributor_name: '日活', distributor_id: 0 },
+  { distributor_name: '東宝', distributor_id: 1 },
+])
 
 /**
  * 映画名入力必須バリデーション
@@ -99,6 +113,17 @@ const limitAitTimeLength = (value) => {
 }
 
 /**
+ * 配給会社選択必須バリデーション
+ * @param {string} value 配給会社 
+ */
+const requiredDistributor = (value) => {
+  if (value) {
+    return true;
+  }
+  return '配給会社を選択してください。'
+}
+
+/**
  * 送信時に全バリデーションが通過しているかを確認
  */
 const submit = async () => {
@@ -126,6 +151,8 @@ const registerMovie = () => {
     movie_name: movie_name.value,
     release_year: release_year.value,
     air_time: air_time.value,
+    distributor_id: distributor.value.distributor_id,
+    genre_id: 0,
   }).then(isConfirmRegisterDialog.value = false, isCompletedDialog.value = true)
 }
 </script>
