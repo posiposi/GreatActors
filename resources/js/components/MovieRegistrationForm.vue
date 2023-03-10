@@ -22,6 +22,11 @@
             item-value="distributor_id" label="配給会社" :rules="[requiredDistributor]" return-object single-line
             clearable></v-select>
         </v-col>
+
+        <v-col cols="12" md="4">
+          <v-select v-model="genre" :items="genres_list" item-title="genre_theme" item-value="genre_id" label="ジャンル"
+            :rules="[requiredGenre]" return-object single-line clearable></v-select>
+        </v-col>
       </v-row>
       <v-row>
         <v-btn class="register-btn" outlined @click="submit">
@@ -77,7 +82,16 @@ const distributor = ref();
 const distributors_list = ref([
   { distributor_name: '日活', distributor_id: 0 },
   { distributor_name: '東宝', distributor_id: 1 },
-])
+]);
+/** ジャンルドロップダウンリスト */
+const genre = ref();
+/** ジャンルドロップダウンリスト内容 */
+const genres_list = ref([
+  { genre_theme: 'アクション', genre_id: 0 },
+  { genre_theme: 'ラブストーリー', genre_id: 1 },
+  { genre_theme: '青春', genre_id: 2 },
+  { genre_theme: '時代劇', genre_id: 3 },
+]);
 
 /**
  * 映画名入力必須バリデーション
@@ -114,13 +128,24 @@ const limitAitTimeLength = (value) => {
 
 /**
  * 配給会社選択必須バリデーション
- * @param {string} value 配給会社 
+ * @param {string} value 配給会社
  */
 const requiredDistributor = (value) => {
   if (value) {
     return true;
   }
   return '配給会社を選択してください。'
+}
+
+/**
+ * ジャンル選択必須バリデーション
+ * @param {string} value ジャンル
+ */
+const requiredGenre = (value) => {
+  if (value) {
+    return true;
+  }
+  return 'ジャンルを選択してください。'
 }
 
 /**
@@ -152,7 +177,7 @@ const registerMovie = () => {
     release_year: release_year.value,
     air_time: air_time.value,
     distributor_id: distributor.value.distributor_id,
-    genre_id: 0,
+    genre_id: genre.value.genre_id,
   }).then(isConfirmRegisterDialog.value = false, isCompletedDialog.value = true)
 }
 </script>
