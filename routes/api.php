@@ -29,3 +29,5 @@ Route::post('/movie/store', [MovieController::class, 'store'])->name('movie.stor
 Route::get('/actors', [ActorController::class, 'index'])->name('actors.index');
 
 Route::post('/actor/store', [ActorController::class, 'store'])->name('actor.store');
+
+Route::delete('/actor/{actor_id}/delete', [ActorController::class, 'destroy'])->name('actor.delete');

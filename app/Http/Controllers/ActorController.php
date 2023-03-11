@@ -59,13 +59,13 @@ class ActorController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 該当の俳優レコードを削除する
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $actor_id 削除対象の俳優id
+     * @return void
      */
-    public function destroy($id)
+    public function destroy($actor_id)
     {
-        //
+        $this->actor_service->deleteActorRecord($actor_id);
     }
 }

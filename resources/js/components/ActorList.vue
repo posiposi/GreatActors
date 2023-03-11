@@ -14,7 +14,7 @@
 				<td>{{ actor.actor_name }}</td>
 				<td><v-btn color="light-blue">詳細</v-btn></td>
 				<td>
-					<v-btn icon size="small" color="red-darken-4">
+					<v-btn icon size="small" color="red-darken-4" @click="confirmDeleteDialog(actor.id, actor.actor_name)">
 						<v-icon>mdi-Delete</v-icon>
 					</v-btn>
 				</td>
@@ -29,7 +29,7 @@
 			<v-card-actions>
 				<v-spacer></v-spacer>
 				<v-btn color="green darken-1" text @click="isDialog = false">キャンセル</v-btn>
-				<v-btn color="green darken-1" text>削除</v-btn>
+				<v-btn color="green darken-1" text @click="deleteActor(actorId)">削除</v-btn>
 			</v-card-actions>
 		</v-card>
 	</v-dialog>
@@ -42,10 +42,10 @@ import { onMounted, ref } from "vue";
 const actors = ref([]);
 // ダイアログ初期値は非表示
 const isDialog = ref(false);
-// // 映画ID
-// const movieId = ref();
-// // 映画名
-// const movieName = ref();
+// 俳優ID
+const actorId = ref();
+// 俳優名
+const actorName = ref();
 
 // 俳優テーブルの全レコードをAPI経由で取得する
 const getAllActorsList = () => {
@@ -53,22 +53,22 @@ const getAllActorsList = () => {
 		.then(response => actors.value = response.data.actors)
 }
 
-// // 映画削除確認ダイアログを表示する
-// const confirmDeleteDialog = (movie_id, movie_name) => {
-// 	// ダイアログを表示
-// 	isDialog.value = true;
-// 	movieId.value = movie_id;
-// 	movieName.value = movie_name;
-// }
+// 俳優削除確認ダイアログを表示する
+const confirmDeleteDialog = (actor_id, actor_name) => {
+	// ダイアログを表示
+	isDialog.value = true;
+	actorId.value = actor_id;
+	actorName.value = actor_name;
+}
 
-// 該当の映画レコードを削除する
-// const deleteActor = (movie_id) => {
-// 	axios.delete('/api/' + movie_id + '/delete')
-// 		.then(() => {
-// 			getAllMoviesList();
-// 			isDialog.value = false;
-// 		});
-// }
+// 該当の俳優レコードを削除する
+const deleteActor = (actor_id) => {
+	axios.delete('/api/actor/' + actor_id + '/delete')
+		.then(() => {
+			getAllActorsList();
+			isDialog.value = false;
+		});
+}
 
 onMounted(() => {
 	getAllActorsList();
