@@ -1,38 +1,19 @@
 <template>
-	<v-table>
-		<thead class="bg-grey-lighten-3">
-			<tr>
-				<th class="text-left">
-					映画名
-				</th>
-				<th class="text-left">
-					公開年
-				</th>
-				<th class="text-left">
-					上映時間
-				</th>
-				<th class="text-left"></th>
-				<th class="text-left"></th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr v-for="movie in movies" :key="movie.id">
-				<td>{{ movie.movie_name }}</td>
-				<td>{{ movie.release_year }}年</td>
-				<td>{{ movie.air_time }}分</td>
-				<td><v-btn color="light-blue">詳細</v-btn></td>
-				<td>
-					<v-btn icon size="small" color="red-darken-4" @click="confirmDeleteDialog(movie.id, movie.movie_name)">
-						<v-icon>mdi-Delete</v-icon>
-					</v-btn>
-				</td>
-			</tr>
-		</tbody>
-	</v-table>
+	<v-data-table v-model:items-per-page="itemsPerPage" :headers="headers" :items="movies" item-value="id">
+		<template v-slot:item.actions="{ item }">
+			<v-icon size="small" class="me-2" @click="editItem(item.raw)">
+				mdi-pencil
+			</v-icon>
+			<v-icon size="small" @click="confirmDeleteDialog(item.raw)">
+				mdi-delete
+			</v-icon>
+		</template>
+	</v-data-table>
 
-	<v-dialog v-model="isDialog" persistent max-width="290">
+
+	<v-dialog v-model="isDialog" max-width="400">
 		<v-card>
-			<v-card-title class="headline">削除確認</v-card-title>
+			<v-card-title class="headline">{{ movieName }}</v-card-title>
 			<v-card-text>{{ movieName }}を削除してもよろしいですか？</v-card-text>
 			<v-card-actions>
 				<v-spacer></v-spacer>
@@ -54,6 +35,16 @@ const isDialog = ref(false);
 const movieId = ref();
 // 映画名
 const movieName = ref();
+// ページネーション表示数
+const itemsPerPage = ref(10);
+
+// ヘッダー部タイトル表示
+const headers = ref([
+	{ title: '映画名', align: 'start', key: 'movie_name', width: '40%' },
+	{ title: '公開年', align: 'start', key: 'release_year', width: '20%' },
+	{ title: '上映時間', align: 'start', key: 'air_time', width: '20%' },
+	{ title: '', key: 'actions', sortable: false, width: '20%' },
+]);
 
 // 映画テーブルの全レコードをAPI経由で取得する
 const getAllMoviesList = () => {
@@ -62,11 +53,11 @@ const getAllMoviesList = () => {
 }
 
 // 映画削除確認ダイアログを表示する
-const confirmDeleteDialog = (movie_id, movie_name) => {
+const confirmDeleteDialog = (targetRaw) => {
 	// ダイアログを表示
 	isDialog.value = true;
-	movieId.value = movie_id;
-	movieName.value = movie_name;
+	movieId.value = targetRaw.id;
+	movieName.value = targetRaw.movie_name;
 }
 
 // 該当の映画レコードを削除する
