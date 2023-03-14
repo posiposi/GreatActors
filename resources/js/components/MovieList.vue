@@ -1,5 +1,30 @@
 <template>
-	<v-table>
+	<v-data-table v-model:items-per-page="itemsPerPage" :headers="headers" :items="movies" item-value="id"
+		class="movie-data-table" @click:row="clickTest">
+		<template v-slot:item.actions="{ item }">
+			<v-icon size="small" class="me-2" @click="editItem(item.raw)">
+				mdi-pencil
+			</v-icon>
+			<v-icon size="small" @click="deleteItem(item.raw)">
+				mdi-delete
+			</v-icon>
+		</template>
+	</v-data-table>
+
+
+	<v-dialog v-model="isDialog" max-width="400">
+		<v-card>
+			<v-card-title class="headline">{{ movieName }}</v-card-title>
+			<v-card-text>{{ movieName }}を削除してもよろしいですか？</v-card-text>
+			<v-card-actions>
+				<v-spacer></v-spacer>
+				<v-btn color="green darken-1" text @click="isDialog = false">キャンセル</v-btn>
+				<v-btn color="green darken-1" text @click="deleteMovie(movieId)">削除</v-btn>
+			</v-card-actions>
+		</v-card>
+	</v-dialog>
+
+	<!-- <v-table>
 		<thead class="bg-grey-lighten-3">
 			<tr>
 				<th class="text-left">
@@ -28,9 +53,9 @@
 				</td>
 			</tr>
 		</tbody>
-	</v-table>
+	</v-table> -->
 
-	<v-dialog v-model="isDialog" persistent max-width="290">
+	<!-- <v-dialog v-model="isDialog" persistent max-width="290">
 		<v-card>
 			<v-card-title class="headline">削除確認</v-card-title>
 			<v-card-text>{{ movieName }}を削除してもよろしいですか？</v-card-text>
@@ -40,7 +65,7 @@
 				<v-btn color="green darken-1" text @click="deleteMovie(movieId)">削除</v-btn>
 			</v-card-actions>
 		</v-card>
-	</v-dialog>
+	</v-dialog> -->
 </template>
 
 <script setup>
@@ -54,6 +79,17 @@ const isDialog = ref(false);
 const movieId = ref();
 // 映画名
 const movieName = ref();
+
+// ページネーション表示数定数
+const itemsPerPage = ref(10);
+
+// ヘッダー部タイトル表示
+const headers = ref([
+	{ title: '映画名', align: 'start', key: 'movie_name', width: '40%' },
+	{ title: '公開年', align: 'start', key: 'release_year', width: '20%' },
+	{ title: '上映時間', align: 'start', key: 'air_time', width: '20%' },
+	{ title: '', key: 'actions', sortable: false, width: '20%' },
+]);
 
 // 映画テーブルの全レコードをAPI経由で取得する
 const getAllMoviesList = () => {
@@ -76,6 +112,15 @@ const deleteMovie = (movie_id) => {
 			getAllMoviesList();
 			isDialog.value = false;
 		});
+}
+
+// 行クリックテスト
+const clickTest = (e, movies) => {
+	// ダイアログを表示
+	isDialog.value = true;
+	console.log(movies.item.raw);
+	movieName.value = movies.item.raw.movie_name;
+	movieId.value = movies.item.raw.movie_id;
 }
 
 onMounted(() => {
