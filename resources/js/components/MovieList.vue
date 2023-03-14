@@ -1,5 +1,5 @@
 <template>
-	<v-data-table v-model:items-per-page="itemsPerPage" :headers="headers" :items="movies" item-value="id">
+	<v-data-table :items-per-page="itemsPerPage" :headers="headers" :items="movies" :sort-by="sortBy">
 		<template v-slot:item.actions="{ item }">
 			<v-icon size="small" class="me-2" @click="editItem(item.raw)">
 				mdi-pencil
@@ -37,6 +37,8 @@ const movieId = ref();
 const movieName = ref();
 // ページネーション表示数
 const itemsPerPage = ref(10);
+// ページ初期表示時のソート(映画名昇順)
+const sortBy = [{ key: 'movie_name', order: 'asc' }];
 
 // ヘッダー部タイトル表示
 const headers = ref([
