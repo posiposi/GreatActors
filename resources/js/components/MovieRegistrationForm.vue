@@ -36,7 +36,7 @@
     </v-container>
   </v-form>
 
-  <v-dialog v-model="isConfirmRegisterDialog" persistent max-width="290">
+  <v-dialog v-model="isConfirmRegisterDialog" max-width="290">
     <v-card>
       <v-card-title class="headline">登録確認</v-card-title>
       <v-card-text>登録してもよろしいですか？</v-card-text>
