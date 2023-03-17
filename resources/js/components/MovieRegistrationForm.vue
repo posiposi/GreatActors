@@ -120,10 +120,10 @@ const limitReleaseYearLength = (value) => {
  * @param {int} value 上映時間フォームの入力値
  */
 const limitAitTimeLength = (value) => {
-  if (value.length == 3 && value.match(/^[0-9]+$/)) {
+  if (value.length <= 3 && value.match(/^[0-9]+$/)) {
     return true;
   }
-  return '上映時間は半角数字3桁で入力してください。';
+  return '上映時間は半角数字3桁以内で入力してください。';
 }
 
 /**
