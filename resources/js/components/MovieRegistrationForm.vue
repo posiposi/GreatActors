@@ -36,7 +36,7 @@
     </v-container>
   </v-form>
 
-  <v-dialog v-model="isConfirmRegisterDialog" persistent max-width="290">
+  <v-dialog v-model="isConfirmRegisterDialog" max-width="290">
     <v-card>
       <v-card-title class="headline">登録確認</v-card-title>
       <v-card-text>登録してもよろしいですか？</v-card-text>
@@ -120,10 +120,10 @@ const limitReleaseYearLength = (value) => {
  * @param {int} value 上映時間フォームの入力値
  */
 const limitAitTimeLength = (value) => {
-  if (value.length == 3 && value.match(/^[0-9]+$/)) {
+  if (value.length <= 3 && value.match(/^[0-9]+$/)) {
     return true;
   }
-  return '上映時間は半角数字3桁で入力してください。';
+  return '上映時間は半角数字3桁以内で入力してください。';
 }
 
 /**
