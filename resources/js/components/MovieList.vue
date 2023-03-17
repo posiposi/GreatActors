@@ -1,5 +1,14 @@
 <template>
-	<v-data-table :items-per-page="itemsPerPage" :headers="headers" :items="movies" :sort-by="sortBy">
+	<v-row class="mt-1">
+		<v-col cols="8">
+			<h1 class="font-italic">映画一覧</h1>
+		</v-col>
+		<v-col cols="4">
+			<v-text-field v-model="search" append-icon="mdi-magnify" label="検索" single-line></v-text-field>
+		</v-col>
+	</v-row>
+
+	<v-data-table :items-per-page="itemsPerPage" :headers="headers" :items="movies" :sort-by="sortBy" :search="search">
 		<template v-slot:item.actions="{ item }">
 			<v-icon size="small" class="me-2" @click="editItem(item.raw)">
 				mdi-pencil
@@ -9,7 +18,6 @@
 			</v-icon>
 		</template>
 	</v-data-table>
-
 
 	<v-dialog v-model="isDialog" max-width="400">
 		<v-card>
@@ -39,6 +47,8 @@ const movieName = ref();
 const itemsPerPage = ref(10);
 // ページ初期表示時のソート(映画名昇順)
 const sortBy = [{ key: 'movie_name', order: 'asc' }];
+// 検索フォーム入力値
+const search = ref('');
 
 // ヘッダー部タイトル表示
 const headers = ref([
