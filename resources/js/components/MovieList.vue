@@ -30,6 +30,16 @@
 			</v-card-actions>
 		</v-card>
 	</v-dialog>
+
+	<v-dialog v-model="isDeleteDialog" max-width="500">
+		<v-card>
+			<v-card-title class="headline">{{ movieName }}を削除しました</v-card-title>
+			<v-card-actions>
+				<v-spacer></v-spacer>
+				<v-btn color="green darken-1" text @click="isDeleteDialog = false">OK</v-btn>
+			</v-card-actions>
+		</v-card>
+	</v-dialog>
 </template>
 
 <script setup>
@@ -37,8 +47,10 @@ import { onMounted, ref } from "vue";
 
 // 映画レコード用定数を初期化
 const movies = ref([]);
-// ダイアログ初期値は非表示
+// 削除確認ダイアログ
 const isDialog = ref(false);
+// 削除完了ダイアログ
+const isDeleteDialog = ref(false);
 // 映画ID
 const movieId = ref();
 // 映画名
@@ -78,6 +90,7 @@ const deleteMovie = (movie_id) => {
 		.then(() => {
 			getAllMoviesList();
 			isDialog.value = false;
+			isDeleteDialog.value = true;
 		});
 }
 
