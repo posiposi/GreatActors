@@ -57,6 +57,21 @@ class MovieTest extends TestCase
     }
 
     /**
+     * 映画-ジャンルテーブル間リレーションテスト
+     *
+     * @return void
+     */
+    public function testMovieBelongsToGenre()
+    {
+        // 投入テストデータ数
+        $data_count = 3;
+        // 映画テーブル、ジャンルテーブルにテストデータを投入
+        Movie::factory()->has(Genre::factory()->count($data_count))->make();
+
+        $this->assertEquals(Movie::count(), Genre::count());
+    }
+
+    /**
      * 映画削除メソッドテスト
      *
      * @return void
