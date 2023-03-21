@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Movie;
 use App\Models\Actor;
 use App\Models\Distributor;
+use App\Models\Genre;
 
 class MovieTest extends TestCase
 {
