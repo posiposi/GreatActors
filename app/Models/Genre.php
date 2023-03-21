@@ -14,4 +14,14 @@ class Genre extends Model
     protected $fillable = [
         'genre_theme',
     ];
+
+    /**
+     * リレーション:このジャンルの映画
+     *
+     * @return void
+     */
+    public function movies()
+    {
+        return $this->hasMany(Movie::class);
+    }
 }

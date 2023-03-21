@@ -22,6 +22,6 @@ class Distributor extends Model
      */
     public function movies()
     {
-        return $this->hasMany(Movie::class, 'distributor_id', 'id');
+        return $this->hasMany(Movie::class);
     }
 }

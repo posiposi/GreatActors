@@ -40,6 +40,16 @@ class Movie extends Model
      */
     public function distributor()
     {
-        return $this->belongsTo(Distributor::class, 'id', 'distributor_id');
+        return $this->belongsTo(Distributor::class);
+    }
+
+    /**
+     * リレーション：この映画のジャンル
+     *
+     * @return void
+     */
+    public function genre()
+    {
+        return $this->belongsTo(Genre::class);
     }
 }
