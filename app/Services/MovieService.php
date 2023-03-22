@@ -13,7 +13,8 @@ class MovieService
      */
     public function getMovieListJson()
     {
-        $movies = Movie::all();
+        // 配給会社を含めた全映画レコードを取得
+        $movies = Movie::with(['distributor', 'genre'])->get();
 
         return response()->json(['movies' => $movies]);
     }
