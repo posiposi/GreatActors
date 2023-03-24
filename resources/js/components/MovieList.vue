@@ -8,7 +8,8 @@
 		</v-col>
 	</v-row>
 
-	<v-data-table :items-per-page="itemsPerPage" :headers="headers" :items="movies" :sort-by="sortBy" :search="search">
+	<v-data-table :items-per-page="itemsPerPage" :headers="headers" :items="movies" :sort-by="sortBy" :search="search"
+		:custom-filter="customFilter">
 		<template v-slot:item.actions="{ item }">
 			<v-icon size="small" class="me-2" @click="editItem(item.raw)">
 				mdi-pencil
@@ -64,19 +65,26 @@ const search = ref('');
 
 // ヘッダー部タイトル表示
 const headers = ref([
-	{ title: '映画名', align: 'start', key: 'movie_name', width: '40%' },
-	{ title: '公開年', align: 'start', key: 'release_year', width: '20%' },
-	{ title: '上映時間', align: 'start', key: 'air_time', width: '20%' },
+	{ title: '映画名', align: 'start', key: 'movie_name', width: '35%' },
+	{ title: '公開年', align: 'start', key: 'release_year', width: '10%' },
+	{ title: '上映時間', align: 'start', key: 'air_time', width: '10%' },
+	{ title: '配給会社', align: 'start', key: 'distributor.distributor_name', width: '10%' },
+	{ title: 'ジャンル', align: 'start', key: 'genre.genre_theme', width: '15%' },
 	{ title: '', key: 'actions', sortable: false, width: '20%' },
 ]);
 
-// 映画テーブルの全レコードをAPI経由で取得する
+/**
+ * 映画テーブルの全レコードをAPI経由で取得する
+ */
 const getAllMoviesList = () => {
 	axios.get('/api/movies')
 		.then(response => movies.value = response.data.movies)
 }
 
-// 映画削除確認ダイアログを表示する
+/**
+ * 映画削除確認ダイアログを表示する
+ * @param {any} targetRaw 削除対象映画の行
+ */
 const confirmDeleteDialog = (targetRaw) => {
 	// ダイアログを表示
 	isDialog.value = true;
@@ -84,7 +92,10 @@ const confirmDeleteDialog = (targetRaw) => {
 	movieName.value = targetRaw.movie_name;
 }
 
-// 該当の映画レコードを削除する
+/**
+ * 該当の映画レコードを削除する
+ * @param {int} movie_id 削除対象映画ID
+ */
 const deleteMovie = (movie_id) => {
 	axios.delete('/api/' + movie_id + '/delete')
 		.then(() => {
@@ -92,6 +103,22 @@ const deleteMovie = (movie_id) => {
 			isDialog.value = false;
 			isDeleteDialog.value = true;
 		});
+}
+
+/**
+ * リレーション項目検索用のカスタムフィルター
+ * @param {any} value 検索対象列
+ * @param {string} search 検索単語
+ */
+const customFilter = (value, search) => {
+	return value != null &&
+		search != null &&
+		typeof value !== 'boolean' &&
+		// 該当列オブジェクトの値を配列にした後に、検索のために文字列結合を行い、真偽値確認
+		// 配給会社列
+		(typeof value === 'object' ? Object.values(value.raw.distributor.distributor_name).join('') : value.toString()).includes(search) === true ||
+		// ジャンル列
+		(typeof value === 'object' ? Object.values(value.raw.genre.genre_theme).join('') : value.toString()).includes(search) === true;
 }
 
 onMounted(() => {
