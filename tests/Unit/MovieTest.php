@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Movie;
 use App\Models\Actor;
 use App\Models\Distributor;
+use App\Models\Genre;
 
 class MovieTest extends TestCase
 {
@@ -54,6 +55,21 @@ class MovieTest extends TestCase
         Movie::factory()->has(Distributor::factory()->count($data_count))->make();
 
         $this->assertEquals(Movie::count(), Distributor::count());
+    }
+
+    /**
+     * 映画-ジャンルテーブル間リレーションテスト
+     *
+     * @return void
+     */
+    public function testMovieBelongsToGenre()
+    {
+        // 投入テストデータ数
+        $data_count = 3;
+        // 映画テーブル、ジャンルテーブルにテストデータを投入
+        Movie::factory()->has(Genre::factory()->count($data_count))->make();
+
+        $this->assertEquals(Movie::count(), Genre::count());
     }
 
     /**

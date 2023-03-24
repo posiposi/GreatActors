@@ -6,17 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Distributor extends Model
+class Genre extends Model
 {
     use HasFactory;
-    use SoftDeletes;
 
     protected $fillable = [
-        'distributor_name',
+        'genre_theme',
     ];
 
     /**
-     * リレーション：この会社の配給映画
+     * リレーション:このジャンルの映画
      *
      * @return void
      */
