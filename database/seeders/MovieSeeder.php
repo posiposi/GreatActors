@@ -23,7 +23,7 @@ class MovieSeeder extends Seeder
                 'release_year' => random_int(1920, 2023),
                 'air_time' => random_int(90, 140),
                 'distributor_id' => random_int(0, 1),
-                'genre_id' => random_int(0, 5),
+                'genre_id' => random_int(0, 3),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
