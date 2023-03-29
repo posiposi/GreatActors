@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * 出演比率テーブル作成マイグレーションを実行する
      *
      * @return void
      */
@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('rates', function (Blueprint $table) {
             $table->id();
+            $table->string('appearance_rate', 4);
             $table->timestamps();
         });
     }
