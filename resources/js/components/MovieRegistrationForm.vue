@@ -175,7 +175,7 @@ const registerMovie = () => {
   axios.post('/api/movie/store', {
     movie_name: movie_name.value,
     release_year: release_year.value,
-    air_time: air_time.value,
+    air_time: air_time.value + '分',
     distributor_id: distributor.value.distributor_id,
     genre_id: genre.value.genre_id,
   }).then(isConfirmRegisterDialog.value = false, isCompletedDialog.value = true)
