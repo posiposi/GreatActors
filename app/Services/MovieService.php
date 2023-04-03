@@ -3,9 +3,17 @@
 namespace App\Services;
 
 use App\Models\Movie;
+use App\Repositories\MovieRepository;
 
 class MovieService
 {
+    protected $movieRepository;
+
+    public function __construct(MovieRepository $movieRepository)
+    {
+        $this->movieRepository = $movieRepository;
+    }
+
     /**
      * 映画レコードを全件取得する
      *
@@ -14,7 +22,7 @@ class MovieService
     public function getMovieListJson()
     {
         // 配給会社を含めた全映画レコードを取得
-        $movies = Movie::with(['distributor', 'genre'])->get();
+        $movies = $this->movieRepository->getMovieList();
 
         return response()->json(['movies' => $movies]);
     }
