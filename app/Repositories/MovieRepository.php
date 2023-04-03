@@ -1,30 +1,20 @@
 <?php
 
-namespace App\Services;
+namespace App\Repositories;
 
 use App\Models\Movie;
-use App\Repositories\MovieRepository;
 
-class MovieService
+class MovieRepository implements MovieRepositoryInterface
 {
-    protected $movieRepository;
-
-    public function __construct(MovieRepository $movieRepository)
-    {
-        $this->movieRepository = $movieRepository;
-    }
-
     /**
      * 映画レコードを全件取得する
      *
-     * @return Collection<Movie> $movies
+     * @return Collection<Movie> $movies 映画の全件レコード
      */
-    public function getMovieListJson()
+    public function getMovieList()
     {
         // 配給会社を含めた全映画レコードを取得
-        $movies = $this->movieRepository->getMovieList();
-
-        return response()->json(['movies' => $movies]);
+        return Movie::with(['distributor', 'genre'])->get();
     }
 
     /**
@@ -45,7 +35,7 @@ class MovieService
      * @param integer $movie_id 削除対象の映画id
      * @return void
      */
-    public function deleteMovieRecord(int $movie_id): void
+    public function deleteMovieRecord(int $movie_id)
     {
         $movie = Movie::findOrFail($movie_id);
         $movie->delete();
