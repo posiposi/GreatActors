@@ -7,11 +7,11 @@ use App\Services\MovieService;
 
 class MovieController extends Controller
 {
-    private $movie_service;
+    private $movieService;
 
-    public function __construct()
+    public function __construct(MovieService $movieService)
     {
-        $this->movie_service = app()->make(MovieService::class);
+        $this->movieService = $movieService;
     }
 
     /**
@@ -19,9 +19,9 @@ class MovieController extends Controller
      *
      * @return array 映画レコード(全件)
      */
-    public function getAllMovieList()
+    public function index()
     {
-        return $this->movie_service->getMovieListJson();
+        return $this->movieService->getMovieListJson();
     }
 
     /**
@@ -32,7 +32,7 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
-        $this->movie_service->registerMovie($request);
+        $this->movieService->registerMovie($request);
     }
 
     /**
@@ -66,6 +66,6 @@ class MovieController extends Controller
      */
     public function destroy(int $movie_id)
     {
-        $this->movie_service->deleteMovieRecord($movie_id);
+        $this->movieService->deleteMovieRecord($movie_id);
     }
 }
