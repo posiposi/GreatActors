@@ -3,17 +3,30 @@
 namespace App\Services;
 
 use App\Models\Actor;
+use App\Repositories\ActorRepository;
 
 class ActorService
 {
+    private $actor_repository;
+
     /**
-     * 俳優レコードを全件取得する
+     * 俳優テーブルへのアクセス用リポジトリコンストラクタ
      *
-     * @return Collection<Actor> $actors
+     * @param ActorRepository $actor_repository 俳優テーブルアクセス用リポジトリ
      */
-    public function getAllActorList()
+    public function __construct(ActorRepository $actor_repository)
     {
-        $actors = Actor::all();
+        $this->actor_repository = $actor_repository;
+    }
+
+    /**
+     * 俳優一覧を取得する
+     *
+     * @return Collection<Actor> $actors 俳優全件レコード
+     */
+    public function getActorsList()
+    {
+        $actors = $this->actor_repository->findAllActors();
 
         return response()->json(['actors' => $actors]);
     }
@@ -26,8 +39,7 @@ class ActorService
      */
     public function deleteActorRecord(int $actor_id): void
     {
-        $actor = Actor::findOrFail($actor_id);
-        $actor->delete();
+        $this->actor_repository->deleteActor($actor_id);
     }
 
     /**
@@ -36,9 +48,8 @@ class ActorService
      * @param Request $actor_register_request 登録する俳優情報リクエスト
      * @return void
      */
-    public function registerActor($actor_register_request)
+    public function registerActorRecord($actor_register_request): void
     {
-        $register_params = $actor_register_request->only('actor_name');
-        Actor::create($register_params);
+        $this->actor_repository->registerActor($actor_register_request);
     }
 }
