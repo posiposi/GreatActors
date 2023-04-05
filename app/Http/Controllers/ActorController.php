@@ -21,7 +21,7 @@ class ActorController extends Controller
      */
     public function index()
     {
-        return $this->actor_service->getAllActorList();
+        return $this->actor_service->getActorsList();
     }
 
     /**
@@ -32,7 +32,7 @@ class ActorController extends Controller
      */
     public function store(Request $request)
     {
-        $this->actor_service->registerActor($request);
+        $this->actor_service->registerActorRecord($request);
     }
 
     /**
