@@ -5,11 +5,17 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Actor;
+use App\Repositories\ActorRepository;
 use App\Services\ActorService;
 
 class ActorTest extends TestCase
 {
     use RefreshDatabase;
+
+    /**
+     * 俳優テーブルアクセス用リポジトリクラス
+     */
+    private $actor_repository;
 
     /**
      * 俳優モデルのファクトリテスト
@@ -55,8 +61,12 @@ class ActorTest extends TestCase
         Actor::factory()->count($data_count)->create();
 
         $actor = Actor::first();
-        $actor_service = new ActorService();
+        // 俳優サービスクラス生成時にリポジトリ層をコンストラクタ
+        $actor_service = new ActorService(
+            $this->actor_repository = new ActorRepository(),
+        );
         $actor_service->deleteActorRecord($actor->id);
+
         // 上記で削除したレコードが存在しないことを確認する
         $this->assertSoftDeleted($actor);
     }
